@@ -1,0 +1,22 @@
+{
+  "name": "node-angular",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timhc22/node-angular.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/timhc22/node-angular/issues"
+  },
+  "homepage": "https://github.com/timhc22/node-angular#readme",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}
