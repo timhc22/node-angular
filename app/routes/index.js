@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 });
 
 // Test route
-router.route('/tests/:id')
+router.route('/tests/:id?') // the ? makes the parameter optional
     .get(testsController.tests.get);
     //.post(testsController.test.post)
 
