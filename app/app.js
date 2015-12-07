@@ -1,4 +1,5 @@
 var express = require('express'),
+    mongoose = require('mongoose'),
     path = require('path'),
     favicon = require('serve-favicon'),
     logger = require('morgan'),
@@ -6,6 +7,11 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     routes = require('./routes'),
     app = express();
+
+var Kitten = require('./models/kittens');
+
+// can surround with dev
+mongoose.connect('mongodb://localhost/test');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -30,6 +36,40 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+
+
+
+// database
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function (callback) {
+    var silence = new Kitten({name: 'Silence'});
+    silence.save(function (err, fluffy) {
+        if (err) return console.error(err);
+        console.log(silence.name); // 'Silence'
+    });
+
+    var fluffy = new Kitten({name: 'fluffy'});
+    fluffy.save(function (err, fluffy) {
+        if (err) return console.error(err);
+        fluffy.speak();
+    });
+
+    Kitten.find(function (err, kittens) {
+        if (err) return console.error(err);
+        console.log(kittens);
+    });
+
+    Kitten.find({name: /^Fluff/}, function (err, kittens) {
+        if (err) return console.error(err);
+        console.log(kittens);
+    });
+});
+
+
+
+
+
 
 // todo should these error handlers be elsewhere?
 // catch 404 and forward to error handler
