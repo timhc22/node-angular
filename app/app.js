@@ -1,5 +1,4 @@
 var express = require('express'),
-    mongoose = require('mongoose'),
     path = require('path'),
     favicon = require('serve-favicon'),
     logger = require('morgan'),
@@ -8,10 +7,11 @@ var express = require('express'),
     routes = require('./routes'),
     app = express();
 
-var Kitten = require('./models/kittens');
-
-// can surround with dev
+// Database, can surround with environment stuff
+var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
+
+var Kitten = require('./models/kittens');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
