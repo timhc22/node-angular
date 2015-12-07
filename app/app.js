@@ -5,6 +5,7 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     routes = require('./routes'),
+    port = process.env.PORT || 3000,
     app = express();
 
 // Database, can surround with environment stuff
@@ -14,25 +15,19 @@ mongoose.connect('mongodb://localhost/test');
 var Kitten = require('./models/kittens');
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views')); //todo is it better to not use path.join? //app.set('views', __dirname + '/views')
 // this makes html the engine
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
-
-// view engine setup
-//app.set('views', __dirname + '/views')
 //app.set('view options', { layout:'layout.html' })
-//app.set('view engine', 'html')
-//app.engine('html', hbs.__express)
 //app.use(express.static(__dirname + '/public'))
 //expstate.extend(app)
-
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false })); // todo what is this
-app.use(cookieParser());
+app.use(cookieParser()); //app.use(express.cookieParser('your secret here')); ?
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
@@ -105,7 +100,7 @@ app.use(function(err, req, res, next) {
 
 
 // run app
-var server = app.listen(3000, function () {
+var server = app.listen(port, function () {
     var host = server.address().address;
     var port = server.address().port;
 
